@@ -77,15 +77,15 @@ def temphist():
     return jsonify(list(np.ravel(temphist)))
 
 
-@app.route("/api/v1.0/<start>")
-def calc_temp(start_date="2017-08-01"):
+@app.route("/api/v1.0/<start_date>")
+def calc_temp(start_date=None):
     temps = [func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)]
 # Calculate TMIN, TAVG, TMAX for dates greater than start
     toutput = session.query(*temps).filter(Measurement.date >= start_date).all()
 # List the response in JSON format
     return jsonify(list(np.ravel(toutput)))
-@app.route("/api/v1.0/<start>/<end>")
-def calc_temps(start_date="2017-08-01", end_date="2017-08-16"):
+@app.route("/api/v1.0/<start_date>/<end_date>")
+def calc_temps(start_date=None, end_date=None):
     temps1 = [func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)]
 # Calculate TMIN, TAVG, TMAX for dates greater than start
     tout = session.query(*temps1).\
